@@ -1,0 +1,14 @@
+{
+  "name": "Start Page",
+  "version": "0.0.1",
+  "description": "A cool start page, that let's you control your PC from your browser.",
+  "keywords": [],
+  "license": "MIT",
+  "author": "BeauTheBeau",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

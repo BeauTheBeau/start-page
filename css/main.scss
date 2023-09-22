@@ -1,0 +1,274 @@
+@import "variables.scss";
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+div.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  height: 100%;
+  width: 100%;
+  background-image: url("../img/wallpapers/gruvbox_epic_arch.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+div.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(8px) brightness(0.9);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  color: rgba(var(--fg), 1);
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+
+main {
+
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  //background-color: rgba(var(--bg), 0.8);
+}
+
+div.time-date {
+  text-align: center;
+}
+
+div.time {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(var(--fg), 1);
+  text-align: center;
+}
+
+
+/*
+  <a class="quick-link" href="https://google.com">
+      <div class="quick-link-icon"><i class="nf nf-fa-google"></i></div>
+      <div class="quick-link-name">Google</div>
+    </a>
+ */
+
+div.quick-links {
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  a.quick-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    border: 2px solid rgba(var(--fg), 0);
+    color: rgba(var(--fg), 1);
+    background-color: rgba(var(--theme-base-colour-alt), 0.8);
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    // Subtle box-shadow
+    box-shadow: 0 0 0 1px rgba(var(--bg), 0.1), 0 2px 4px rgba(var(--bg), 0.1), 0 4px 8px rgba(var(--bg), 0.1), 0 8px 16px rgba(var(--bg), 0.1), 0 16px 32px rgba(var(--bg), 0.1), 0 32px 64px rgba(var(--bg), 0.1);
+
+
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.2s ease-in-out;
+
+    &:hover, &:focus {
+      border: 2px solid rgba(var(--fg), 0.7);
+      box-shadow: 0 0 0 1px rgba(var(--fg), 0.1), 0 2px 4px rgba(var(--fg), 0.1), 0 4px 8px rgba(var(--fg), 0.1), 0 8px 16px rgba(var(--fg), 0.1), 0 16px 32px rgba(var(--fg), 0.1), 0 32px 64px rgba(var(--fg), 0.1);
+      background-color: rgba(var(--theme-base-colour-alt), 1);
+    }
+
+    &:active, &:focus {
+      border: 2px solid rgba(var(--fg), 1.0);
+      transform: rotate(2deg) scale(0.95);
+    }
+
+    div.quick-link-icon {
+      font-size: 1.53rem;
+    }
+  }
+}
+
+.topbar {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(var(--theme-base-colour-alt), 0.8);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(var(--fg), 1);
+  transition: all 0.2s ease-in-out;
+
+  .topbar__section {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}
+
+button {
+
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+
+  background-color: rgba(var(--theme-base-colour-alt), 0.5);
+  border: 2px solid rgba(var(--fg), 0.25);
+  color: rgba(var(--fg), 1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+
+  i, p {
+    height: 100%;
+  }
+
+  &:hover {
+    border: 2px solid rgba(var(--fg), 0.7);
+    box-shadow: 0 0 0 1px rgba(var(--fg), 0.1), 0 2px 4px rgba(var(--fg), 0.1), 0 4px 8px rgba(var(--fg), 0.1), 0 8px 16px rgba(var(--fg), 0.1), 0 16px 32px rgba(var(--fg), 0.1), 0 32px 64px rgba(var(--fg), 0.1);
+    background-color: rgba(var(--theme-base-colour-alt), 1);
+  }
+}
+
+.media__player__controls__button {
+  color: unset;
+}
+
+.media__player {
+
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  padding: 0.5rem;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  background-size: 400% 100%;
+  border: 2px solid rgba(var(--fg), 0.25);
+  border-radius: 0.5rem;
+
+  &.playing {
+    background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(var(--fg), 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+    background-size: cover;
+    background-position: center;
+    animation: epic-gradient 1s ease infinite;
+  }
+
+  .media__player__art {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 0.25rem;
+    overflow: hidden;
+
+    img {
+      height: 100%;
+      width: 100%;
+    }
+
+  }
+
+  .media__player__info {
+    #media__player__info__title {
+      font-size: 1rem;
+      font-weight: 900;
+      max-width: 256px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #media__player__info__artist {
+      font-size: 0.8rem;
+      font-weight: 200;
+    }
+  }
+
+  .media__player__controls {
+    display: flex;
+    flex-direction: row;
+
+    :first-child {
+      border-radius: 0.5em 0 0 0.5em;
+    }
+
+    :last-child {
+      border-radius: 0 0.5em 0.5em 0;
+    }
+
+    :not(:first-child):not(:last-child) {
+      border-radius: 0;
+      border-left: 2px solid transparent;
+      border-right: 2px solid transparent;
+
+      &:hover {
+        border-left: 2px solid rgba(var(--fg), 1);
+        border-right: 2px solid rgba(var(--fg), 1);
+      }
+    }
+  }
+}
+
+
+@keyframes epic-gradient {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+

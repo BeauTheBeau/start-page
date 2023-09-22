@@ -1,0 +1,253 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Startpage</title>
+    <meta name="description" content="An epic start page with a Gruvbox theme.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+
+    <link rel="manifest" href="site.webmanifest">
+    <!--  favicon-->
+    <link rel="icon" type="image/png" href="img.png"/>
+    <!-- Place favicon.ico in the root directory -->
+
+    <link rel="stylesheet" href="css/main.css">
+
+    <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+<div class="background"></div>
+<div class="bg-overlay"></div>
+
+<nav class="topbar">
+    <div class="topbar__left topbar__section">
+        <button id="lock" class="topbar__button" onclick="lockScreen()">
+            <i class="nf nf-fa-lock"></i>
+        </button>
+        <button id="screenshots" class="topbar__button" onclick="takeScreenshot()">
+            <i class="nf nf-md-monitor_screenshot"></i>
+        </button>
+    </div>
+
+    <div class="topbar__center topbar__section">
+        <p class="topbar__title"><i class="nf nf-md-arch"></i></p>
+    </div>
+
+    <div class="topbar__right topbar__section">
+        <button id="settings" class="topbar__button">
+            <i class="nf nf-fa-cog"></i>
+        </button>
+    </div>
+
+</nav>
+
+
+<main>
+
+    <div class="time-date">
+        <!-- Two row clock -->
+        <div class="time" data-multiline="false">
+            <h1 id="hour" class="hour">12</h1>
+            <h1 id="minute" class="minute">00</h1>
+        </div>
+
+        <div class="date">
+            <h2 id="date" class="date">The date is today</h2>
+        </div>
+    </div>
+
+    <div class="quick-links" id="quick-links"></div>
+
+
+</main>
+
+<div class="media__player">
+
+    <div class="media__player__art">
+        <img alt="Album art" id="media__player__art__img">
+    </div>
+
+    <div class="media__player__info">
+        <p id="media__player__info__title">Title</p>
+        <p id="media__player__info__artist">Artist</p>
+    </div>
+
+    <div class="media__player__controls">
+        <button id="media__player__controls__prev" class="media__player__controls__button">
+        <i class="nf nf-fa-step_backward"></i>
+        </button>
+        <button id="media__player__controls__play" class="media__player__controls__button">
+            <i class="nf nf-fa-play"></i>
+        </button>
+        <button id="media__player__controls__next" class="media__player__controls__button">
+            <i class="nf nf-fa-step_forward"></i>
+        </button>
+    </div>
+
+</div>
+
+<canvas id="canvas" width="100" height="100" style="display: none"></canvas>
+
+<script type="module">
+
+
+
+</script>
+
+<script type="module">
+
+    import {main} from './js/colour-extractor.js';
+
+    let song = "";
+
+    async function getMedia() {
+        const media = await fetch('http://localhost:3000/media').then(res => res.text());
+        const mediaJson = JSON.parse(media);
+
+        if (mediaJson.title === '') {
+            document.querySelector('.media__player').style.display = 'none';
+        } else document.querySelector('.media__player').style.display = 'flex';
+
+
+        const art = document.getElementById('media__player__art__img');
+        const title = document.getElementById('media__player__info__title');
+        const artist = document.getElementById('media__player__info__artist');
+
+        if (mediaJson.playing === true) {
+            document.querySelector('.media__player').classList.add('playing');
+            playButton.children[0].classList.remove('nf-fa-play');
+            playButton.children[0].classList.add('nf-fa-pause');
+        } else if (mediaJson.playing === false) {
+            document.querySelector('.media__player').classList.remove('playing');
+            playButton.children[0].classList.remove('nf-fa-pause');
+            playButton.children[0].classList.add('nf-fa-play');
+        }
+
+        title.innerText = mediaJson.title;
+        artist.innerText = mediaJson.artist;
+        art.src = `data:image/png;base64,${mediaJson.artUrl}`;
+
+        if (mediaJson.title !== song) {
+            song = mediaJson.title;
+            main(art.src).then(async colours => {
+                let randomComplementary = Math.floor(Math.random() * colours.complementary.length);
+                let randomComplementary2 = Math.floor(Math.random() * colours.complementary.length);
+                let randomPalette = Math.floor(Math.random() * colours.palette.length);
+
+                async function hexToRgb(hex) {
+                    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+                    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+                        return r + r + g + g + b + b;
+                    });
+
+                    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                    return result ? {
+                        r: parseInt(result[1], 16),
+                        g: parseInt(result[2], 16),
+                        b: parseInt(result[3], 16)
+                    } : 1;
+
+
+                }
+
+                async function checkDifference(c1, c2) {
+                    const c1Rgb = await hexToRgb(c1);
+                    const c2Rgb = await hexToRgb(c2);
+
+                    const difference = Math.sqrt(
+                        Math.pow(c1Rgb.r - c2Rgb.r, 2) +
+                        Math.pow(c1Rgb.g - c2Rgb.g, 2) +
+                        Math.pow(c1Rgb.b - c2Rgb.b, 2)
+                    );
+
+                    if (difference < 0.5) {
+                        randomPalette = 0;
+                        await checkDifference(colours.palette[randomPalette][0], colours.palette[randomPalette][1]);
+                    }
+
+                }
+
+                await checkDifference(colours.palette[randomPalette][0], colours.palette[randomPalette][1]);
+
+                title.style.color = colours.palette[randomPalette];
+                artist.style.color = colours.palette[randomPalette];
+                playButton.style.color = colours.palette[randomPalette];
+                prevButton.style.color = colours.palette[randomPalette];
+                nextButton.style.color = colours.palette[randomPalette];
+
+                // Set variables for use in CSS
+                document.documentElement.style.setProperty('--special-gradient-colour', colours.complementary[randomComplementary]);
+                document.documentElement.style.setProperty('--special-gradient-colour2', colours.complementary[randomComplementary2]);
+
+                document.querySelector('.media__player').style.background = `linear-gradient(90deg, var(--special-gradient-colour) 0%, var(--special-gradient-colour2) 100%)`;
+
+            });
+        }
+    }
+
+    // Every second
+    setInterval(() => {
+        getMedia();
+    }, 1000);
+    getMedia()
+
+    const playButton = document.getElementById('media__player__controls__play');
+    const prevButton = document.getElementById('media__player__controls__prev');
+    const nextButton = document.getElementById('media__player__controls__next');
+
+    playButton.addEventListener('click', playPause);
+    prevButton.addEventListener('click', () => skipUnskip('previous'));
+    nextButton.addEventListener('click', () => skipUnskip('next'));
+
+
+    // Limited to things that do not require sudo
+    // so, no shutdown or reboot
+    async function takeScreenshot() {
+        await fetch('http://localhost:3000/screenshot', {method: 'POST'});
+    }
+
+
+    async function playPause() {
+        await fetch('http://localhost:3000/media', {method: 'POST'});
+
+        // Change icons - first set to opposite of what it is now,
+        //                then set to what it should **definitely** be with getMedia()
+        const playButton = document.getElementById('media__player__controls__play');
+        if (playButton.children[0].classList.contains('nf-fa-play')) {
+            playButton.children[0].classList.remove('nf-fa-play');
+            playButton.children[0].classList.add('nf-fa-pause');
+        } else {
+            playButton.children[0].classList.remove('nf-fa-pause');
+            playButton.children[0].classList.add('nf-fa-play');
+        }
+
+        await getMedia()
+    }
+
+    async function skipUnskip(type) {
+        await fetch(`http://localhost:3000/media/${type}`, {method: 'POST'});
+        await getMedia()
+    }
+
+    async function lockScreen() {
+        await fetch('http://localhost:3000/lock', {method: 'POST'});
+    }
+
+
+</script>
+
+
+<script src="js/main.js"></script>
+<script src="js/quick-links.js"></script>
+
+</body>
+
+</html>

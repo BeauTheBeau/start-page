@@ -1,0 +1,78 @@
+/* Base Colours */
+:root {
+  --accent-bg: rgba(29, 32, 33, 1);
+  --bg: rgba(40, 40, 40, 1);
+  --hdr-bg: rgba(50, 48, 47, 1);
+  --terminal-background: rgba(40, 40, 40, 1);
+  --spotify-proto-bg: rgba(40, 40, 40, 1);
+  --txt-bg: rgba(40, 40, 40, 1);
+}
+
+/* Alternate Base Colours */
+:root {
+  --theme-base-colour: rgba(29, 32, 33, 1);
+  --theme-base-colour-trans: rgba(29, 32, 33, 0.5);
+  --theme-base-colour-alt: rgba(40, 40, 40, 1);
+  --theme-base-colour-alt-trans: rgba(40, 40, 40, 0.8);
+}
+
+/* Buttons and Action Elements */
+:root {
+  --btn-bg: rgba(60, 56, 54, 1);
+  --btn-fg: rgba(97, 10, 122, 1);
+  --menu-bg: rgba(18, 175, 175, 1);
+  --menu-fg: rgba(1, 191, 155, 1);
+  --hdr-btn-bg: rgba(102, 92, 84, 1);
+  --hdr-btn-fg: rgba(1, 191, 155, 1);
+}
+
+/* Selection and Highlight Colours */
+:root {
+  --sel-bg: rgba(124, 111, 100, 1);
+  --sel-fg: rgba(221, 199, 161, 1);
+}
+
+/* Icons and Symbols */
+:root {
+  --icons-archdroid: rgba(210, 240, 0, 1);
+  --icons-dark: rgba(69, 64, 61, 1);
+  --icons-light: rgba(188, 142, 244, 1);
+  --icons-light-folder: rgba(169, 182, 101, 1);
+  --icons-medium: rgba(169, 182, 101, 1);
+  --icons-symbolic-action: rgba(234, 105, 98, 1);
+  --icons-symbolic-panel: rgba(137, 180, 130, 1);
+}
+
+/* Text Colours */
+:root {
+  --fg: rgba(212, 190, 152, 1);
+  --hdr-fg: rgba(221, 199, 161, 1);
+  --terminal-accent-colour: rgba(247, 40, 221, 1);
+  --terminal-colour0: rgba(102, 92, 84, 1);
+  --terminal-colour1: rgba(234, 105, 98, 1);
+  --terminal-colour10: rgba(169, 182, 101, 1);
+  --terminal-colour11: rgba(216, 166, 87, 1);
+  --terminal-colour12: rgba(125, 174, 163, 1);
+  --terminal-colour13: rgba(211, 134, 155, 1);
+  --terminal-colour14: rgba(137, 180, 130, 1);
+  --terminal-colour15: rgba(212, 190, 152, 1);
+  --terminal-colour2: rgba(169, 182, 101, 1);
+  --terminal-colour3: rgba(231, 138, 78, 1);
+  --terminal-colour4: rgba(125, 174, 163, 1);
+  --terminal-colour5: rgba(211, 134, 155, 1);
+  --terminal-colour6: rgba(137, 180, 130, 1);
+  --terminal-colour7: rgba(212, 190, 152, 1);
+  --terminal-colour8: rgba(146, 131, 116, 1);
+  --terminal-colour9: rgba(234, 105, 98, 1);
+  --terminal-cursor: rgba(168, 153, 132, 1);
+  --terminal-foreground: rgba(212, 190, 152, 1);
+  --txt-fg: rgba(210, 240, 0, 1);
+  --spotify-proto-fg: rgba(212, 190, 152, 1);
+  --spotify-proto-sel: rgba(125, 174, 163, 1);
+  --suruplus-gradient1: rgba(33, 130, 110, 1);
+  --suruplus-gradient2: rgba(247, 40, 221, 1);
+  --wm-border-focus: rgba(247, 40, 221, 1);
+  --wm-border-unfocus: rgba(193, 88, 206, 1);
+}
+
+/*# sourceMappingURL=variables.css.map */

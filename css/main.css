@@ -1,0 +1,309 @@
+/* Base Colours */
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+:root {
+  --accent-bg: 29, 32, 33;
+  --bg: 40, 40, 40;
+  --hdr-bg: 50, 48, 47;
+  --terminal-background: 40, 40, 40;
+  --spotify-proto-bg: 40, 40, 40;
+  --txt-bg: 40, 40, 40;
+}
+
+/* Alternate Base Colours */
+:root {
+  --theme-base-colour: 29, 32, 33;
+  --theme-base-colour-alt: 40, 40, 40;
+}
+
+/* Buttons and Action Elements */
+:root {
+  --btn-bg: 60, 56, 54;
+  --btn-fg: 97, 10, 122;
+  --menu-bg: 18, 175, 175;
+  --menu-fg: 1, 191, 155;
+  --hdr-btn-bg: 102, 92, 84;
+  --hdr-btn-fg: 1, 191, 155;
+}
+
+/* Selection and Highlight Colours */
+:root {
+  --sel-bg: 124, 111, 100;
+  --sel-fg: 221, 199, 161;
+}
+
+/* Icons and Symbols */
+:root {
+  --icons-archdroid: 210, 240, 0;
+  --icons-dark: 69, 64, 61;
+  --icons-light: 188, 142, 244;
+  --icons-light-folder: 169, 182, 101;
+  --icons-medium: 169, 182, 101;
+  --icons-symbolic-action: 234, 105, 98;
+  --icons-symbolic-panel: 137, 180, 130;
+}
+
+/* Text Colours */
+:root {
+  --fg: 212, 190, 152;
+  --hdr-fg: 221, 199, 161;
+  --terminal-accent-colour: 247, 40, 221;
+  --terminal-colour0: 102, 92, 84;
+  --terminal-colour1: 234, 105, 98;
+  --terminal-colour10: 169, 182, 101;
+  --terminal-colour11: 216, 166, 87;
+  --terminal-colour12: 125, 174, 163;
+  --terminal-colour13: 211, 134, 155;
+  --terminal-colour14: 137, 180, 130;
+  --terminal-colour15: 212, 190, 152;
+  --terminal-colour2: 169, 182, 101;
+  --terminal-colour3: 231, 138, 78;
+  --terminal-colour4: 125, 174, 163;
+  --terminal-colour5: 211, 134, 155;
+  --terminal-colour6: 137, 180, 130;
+  --terminal-colour7: 212, 190, 152;
+  --terminal-colour8: 146, 131, 116;
+  --terminal-colour9: 234, 105, 98;
+  --terminal-cursor: 168, 153, 132;
+  --terminal-foreground: 212, 190, 152;
+  --txt-fg: 210, 240, 0;
+  --spotify-proto-fg: 212, 190, 152;
+  --spotify-proto-sel: 125, 174, 163;
+  --suruplus-gradient1: 33, 130, 110;
+  --suruplus-gradient2: 247, 40, 221;
+  --wm-border-focus: 247, 40, 221;
+  --wm-border-unfocus: 193, 88, 206;
+}
+
+* {
+  font-family: "Inter", sans-serif;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+div.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  height: 100%;
+  width: 100%;
+  background-image: url("../img/wallpapers/gruvbox_epic_arch.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+div.bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(8px) brightness(0.9);
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  color: rgba(var(--fg), 1);
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+div.time-date {
+  text-align: center;
+}
+
+div.time {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: 700;
+  color: rgba(var(--fg), 1);
+  text-align: center;
+}
+
+/*
+  <a class="quick-link" href="https://google.com">
+      <div class="quick-link-icon"><i class="nf nf-fa-google"></i></div>
+      <div class="quick-link-name">Google</div>
+    </a>
+ */
+div.quick-links {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+div.quick-links a.quick-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  border: 2px solid rgba(var(--fg), 0);
+  color: rgba(var(--fg), 1);
+  background-color: rgba(var(--theme-base-colour-alt), 0.8);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0 1px rgba(var(--bg), 0.1), 0 2px 4px rgba(var(--bg), 0.1), 0 4px 8px rgba(var(--bg), 0.1), 0 8px 16px rgba(var(--bg), 0.1), 0 16px 32px rgba(var(--bg), 0.1), 0 32px 64px rgba(var(--bg), 0.1);
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+div.quick-links a.quick-link:hover, div.quick-links a.quick-link:focus {
+  border: 2px solid rgba(var(--fg), 0.7);
+  box-shadow: 0 0 0 1px rgba(var(--fg), 0.1), 0 2px 4px rgba(var(--fg), 0.1), 0 4px 8px rgba(var(--fg), 0.1), 0 8px 16px rgba(var(--fg), 0.1), 0 16px 32px rgba(var(--fg), 0.1), 0 32px 64px rgba(var(--fg), 0.1);
+  background-color: rgba(var(--theme-base-colour-alt), 1);
+}
+div.quick-links a.quick-link:active, div.quick-links a.quick-link:focus {
+  border: 2px solid rgba(var(--fg), 1);
+  transform: rotate(2deg) scale(0.95);
+}
+div.quick-links a.quick-link div.quick-link-icon {
+  font-size: 1.53rem;
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: rgba(var(--theme-base-colour-alt), 0.8);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgba(var(--fg), 1);
+  transition: all 0.2s ease-in-out;
+}
+.topbar .topbar__section {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+button {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: rgba(var(--theme-base-colour-alt), 0.5);
+  border: 2px solid rgba(var(--fg), 0.25);
+  color: rgba(var(--fg), 1);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  transition: all 0.2s ease-in-out;
+}
+button i, button p {
+  height: 100%;
+}
+button:hover {
+  border: 2px solid rgba(var(--fg), 0.7);
+  box-shadow: 0 0 0 1px rgba(var(--fg), 0.1), 0 2px 4px rgba(var(--fg), 0.1), 0 4px 8px rgba(var(--fg), 0.1), 0 8px 16px rgba(var(--fg), 0.1), 0 16px 32px rgba(var(--fg), 0.1), 0 32px 64px rgba(var(--fg), 0.1);
+  background-color: rgba(var(--theme-base-colour-alt), 1);
+}
+
+.media__player__controls__button {
+  color: unset;
+}
+
+.media__player {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  background-size: 400% 100%;
+  border: 2px solid rgba(var(--fg), 0.25);
+  border-radius: 0.5rem;
+}
+.media__player.playing {
+  background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(var(--fg), 0.1) 50%, rgba(0, 0, 0, 0) 100%);
+  background-size: cover;
+  background-position: center;
+  animation: epic-gradient 1s ease infinite;
+}
+.media__player .media__player__art {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+.media__player .media__player__art img {
+  height: 100%;
+  width: 100%;
+}
+.media__player .media__player__info #media__player__info__title {
+  font-size: 1rem;
+  font-weight: 900;
+  max-width: 256px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.media__player .media__player__info #media__player__info__artist {
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+.media__player .media__player__controls {
+  display: flex;
+  flex-direction: row;
+}
+.media__player .media__player__controls :first-child {
+  border-radius: 0.5em 0 0 0.5em;
+}
+.media__player .media__player__controls :last-child {
+  border-radius: 0 0.5em 0.5em 0;
+}
+.media__player .media__player__controls :not(:first-child):not(:last-child) {
+  border-radius: 0;
+  border-left: 2px solid transparent;
+  border-right: 2px solid transparent;
+}
+.media__player .media__player__controls :not(:first-child):not(:last-child):hover {
+  border-left: 2px solid rgba(var(--fg), 1);
+  border-right: 2px solid rgba(var(--fg), 1);
+}
+
+@keyframes epic-gradient {
+  0% {
+    background-position: 0 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -1,0 +1,79 @@
+/* Base Colours */
+:root {
+  --accent-bg: 29, 32, 33;
+  --bg: 40, 40, 40;
+  --hdr-bg: 50, 48, 47;
+  --terminal-background: 40, 40, 40;
+  --spotify-proto-bg: 40, 40, 40;
+  --txt-bg: 40, 40, 40;
+
+  //--special-gradient-colour: 247, 40, 221;
+  //--special-gradient-colour2: 33, 130, 110;
+
+
+}
+
+/* Alternate Base Colours */
+:root {
+  --theme-base-colour: 29, 32, 33;
+  --theme-base-colour-alt: 40, 40, 40;
+}
+
+/* Buttons and Action Elements */
+:root {
+  --btn-bg: 60, 56, 54;
+  --btn-fg: 97, 10, 122;
+  --menu-bg: 18, 175, 175;
+  --menu-fg: 1, 191, 155;
+  --hdr-btn-bg: 102, 92, 84;
+  --hdr-btn-fg: 1, 191, 155;
+}
+
+/* Selection and Highlight Colours */
+:root {
+  --sel-bg: 124, 111, 100;
+  --sel-fg: 221, 199, 161;
+}
+
+/* Icons and Symbols */
+:root {
+  --icons-archdroid: 210, 240, 0;
+  --icons-dark: 69, 64, 61;
+  --icons-light: 188, 142, 244;
+  --icons-light-folder: 169, 182, 101;
+  --icons-medium: 169, 182, 101;
+  --icons-symbolic-action: 234, 105, 98;
+  --icons-symbolic-panel: 137, 180, 130;
+}
+
+/* Text Colours */
+:root {
+  --fg: 212, 190, 152;
+  --hdr-fg: 221, 199, 161;
+  --terminal-accent-colour: 247, 40, 221;
+  --terminal-colour0: 102, 92, 84;
+  --terminal-colour1: 234, 105, 98;
+  --terminal-colour10: 169, 182, 101;
+  --terminal-colour11: 216, 166, 87;
+  --terminal-colour12: 125, 174, 163;
+  --terminal-colour13: 211, 134, 155;
+  --terminal-colour14: 137, 180, 130;
+  --terminal-colour15: 212, 190, 152;
+  --terminal-colour2: 169, 182, 101;
+  --terminal-colour3: 231, 138, 78;
+  --terminal-colour4: 125, 174, 163;
+  --terminal-colour5: 211, 134, 155;
+  --terminal-colour6: 137, 180, 130;
+  --terminal-colour7: 212, 190, 152;
+  --terminal-colour8: 146, 131, 116;
+  --terminal-colour9: 234, 105, 98;
+  --terminal-cursor: 168, 153, 132;
+  --terminal-foreground: 212, 190, 152;
+  --txt-fg: 210, 240, 0;
+  --spotify-proto-fg: 212, 190, 152;
+  --spotify-proto-sel: 125, 174, 163;
+  --suruplus-gradient1: 33, 130, 110;
+  --suruplus-gradient2: 247, 40, 221;
+  --wm-border-focus: 247, 40, 221;
+  --wm-border-unfocus: 193, 88, 206;
+}
