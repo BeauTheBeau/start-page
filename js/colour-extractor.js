@@ -1,3 +1,5 @@
+// Modified from https://dev.to/producthackers/creating-a-color-palette-with-javascript-44ip
+
 const buildPalette = (colorsList) => {
     const startTime = performance.now();
     const returnValue =  new Promise((resolve, reject) => {
@@ -79,7 +81,6 @@ const hslToHex = (hslColor) => {
  * found here https://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
  */
 const convertRGBtoHSL = (rgbValues) => {
-    const startTime = performance.now();
     const returnValue = rgbValues.map((pixel) => {
         let hue,
             saturation,
@@ -137,8 +138,6 @@ const convertRGBtoHSL = (rgbValues) => {
         };
     });
 
-    const endTime = performance.now();
-    console.log(`Execution time: ${endTime - startTime} ms`);
     return returnValue;
 
 };
@@ -149,13 +148,10 @@ const convertRGBtoHSL = (rgbValues) => {
  * can be found here -> https://en.wikipedia.org/wiki/Luma_(video)
  */
 const orderByLuminance = (rgbValues) => {
-    const startTime = performance.now();
     const calculateLuminance = (p) => {
         return 0.2126 * p.r + 0.7152 * p.g + 0.0722 * p.b;
     };
 
-    const endTime = performance.now();
-    console.log(`Execution time: ${endTime - startTime} ms`);
     return rgbValues.sort((p1, p2) => {
         return calculateLuminance(p2) - calculateLuminance(p1);
     });
@@ -163,9 +159,6 @@ const orderByLuminance = (rgbValues) => {
 
 const buildRgb = (imageData) => {
     const rgbValues = [];
-    const startTime = performance.now();
-    // note that we are loopin every 4!
-    // for every Red, Green, Blue and Alpha
     for (let i = 0; i < imageData.length; i += 32) {
         const rgb = {
             r: imageData[i],
@@ -175,9 +168,6 @@ const buildRgb = (imageData) => {
 
         rgbValues.push(rgb);
     }
-
-    const endTime = performance.now();
-    console.log(`Execution time: ${endTime - startTime} ms`);
     return rgbValues;
 };
 
@@ -303,21 +293,10 @@ export const main = async (imgSrcBase64) => {
             const startTime = performance.now();
 
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            console.log(`Execution time so far: ${performance.now() - startTime} ms`);
             const rgbArray = buildRgb(imageData.data);
-            console.log(`Execution time so far: ${performance.now() - startTime} ms`);
-
-
             const quantColors = quantization(rgbArray, 0);
-            console.log(`Execution time so far: ${performance.now() - startTime} ms`);
-
             const colors = buildPalette(quantColors);
-            console.log(`Execution time so far: ${performance.now() - startTime} ms`);
-
-
             resolve(colors);
-            console.log(`Execution time so far: ${performance.now() - startTime} ms`);
-
         };
 
         image.onerror = (error) => {
