@@ -75,16 +75,10 @@ async function getMedia() {
             document.documentElement.style.setProperty('--special-gradient-colour', colours.complementary[randomComplementary]);
             document.documentElement.style.setProperty('--special-gradient-colour2', colours.palette[randomComplementary]);
 
-            try {
-                console.log(colours.palette[randomPalette]);
-                console.log(colours.complementary[randomComplementary]);
-                document.querySelector('#media__player').style.background = `linear-gradient(90deg, ${colours.palette[randomComplementary]} 0%, ${colours.complementary[randomPalette]} 100%)`;
-                console.log(`linear-gradient(90deg, ${colours.complementary[randomComplementary]} 0%, ${colours.palette[randomPalette]} 100%)`);
-            } catch (e) {
-                console.log(e);
-            } finally {
-                console.log('finally');
-            }
+        }).catch(e => {
+            console.log(e);
+        }).finally(() => {
+            document.querySelector('#media__player').style.background = `linear-gradient(90deg, var(--special-gradient-colour), var(--special-gradient-colour2))`;
         });
     }
 }
