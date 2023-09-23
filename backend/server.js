@@ -176,7 +176,7 @@ app.listen(port, () => {
     console.log(`Backend listening at http://localhost:${port}`);
 
     // Set up the frontend
-    const frontendPath = '../';
+    const frontendPath = '.';
 
     app.use(express.static(frontendPath));
     app.get('/', (req, res) => {
