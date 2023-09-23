@@ -1,4 +1,3 @@
-// =============================================================================
 // Multi-line Clock
 // =============================================================================
 
@@ -35,7 +34,6 @@ function updateDate(dateElement, date) {
 
 }
 
-// Every second, update the clock
 setInterval(() => {
   const date = new Date();
   const hourElement = document.querySelector('.hour');
@@ -44,6 +42,5 @@ setInterval(() => {
 
   updateClock(hourElement, minuteElement, date);
   updateDate(dateElement, date);
-
 }, 100);
 

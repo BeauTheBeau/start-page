@@ -62,8 +62,7 @@ function renderQuickLinks() {
         quickLinkElement.href = quickLink.url;
         quickLinkElement.innerHTML = `
       <div class="quick-link-icon"><i class="nf ${quickLink.icon}"></i></div>
-      <div class="quick-link-name">${quickLink.name}</div>
-    `;
+      <div class="quick-link-name">${quickLink.name}</div>`;
         quickLinksElement.appendChild(quickLinkElement);
     });
 }

@@ -1,50 +1,14 @@
 // Modified from https://dev.to/producthackers/creating-a-color-palette-with-javascript-44ip
 
-const buildPalette = (colorsList) => {
-    const startTime = performance.now();
-    const returnValue =  new Promise((resolve, reject) => {
-        let colours = {
-            "palette": [],
-            "complementary": []
-        }
-
-        const orderedByColor = orderByLuminance(colorsList);
-        const hslColors = convertRGBtoHSL(orderedByColor);
-
-        for (let i = 0; i < orderedByColor.length; i++) {
-            const hexColor = rgbToHex(orderedByColor[i]);
-            const hexColorComplementary = hslToHex(hslColors[i]);
-
-            if (i > 0) {
-                const difference = calculateColorDifference(
-                    orderedByColor[i],
-                    orderedByColor[i - 1]
-                );
-
-                if (difference < 120) continue;
-                colours.palette.push(hexColor);
-            }
-
-            if (hslColors[i].h) {
-                colours.palette.push(hexColor);
-                colours.complementary.push(hexColorComplementary);
-            }
-        }
-
-        resolve(colours);
-    });
-
-    const endTime = performance.now();
-    console.log(`Execution time: ${endTime - startTime} ms`);
-    return returnValue;
-
-};
-
-//  Convert each pixel value ( number ) to hexadecimal ( string ) with base 16
+/**
+ * Convert RGB values to hexadecimal color representation.
+ * @param {object} pixel - The RGB values for a pixel { r: <red>, g: <green>, b: <blue> }.
+ * @returns {string} The hexadecimal representation of the RGB color.
+ */
 const rgbToHex = (pixel) => {
     const componentToHex = (c) => {
         const hex = c.toString(16);
-        return hex.length == 1 ? "0" + hex : hex;
+        return hex.length === 1 ? "0" + hex : hex;
     };
 
     return (
@@ -56,15 +20,15 @@ const rgbToHex = (pixel) => {
 };
 
 /**
- * Convert HSL to Hex
- * this entire formula can be found in stackoverflow, credits to @icl7126 !!!
- * https://stackoverflow.com/a/44134328/17150245
+ * Convert HSL (Hue, Saturation, Luminance) to hexadecimal color representation.
+ *
+ * @param {object} hslColor - The HSL values { h: <hue>, s: <saturation>, l: <luminance> }.
+ * @returns {string} The hexadecimal representation of the HSL color.
  */
 const hslToHex = (hslColor) => {
     const hslColorCopy = { ...hslColor };
     hslColorCopy.l /= 100;
-    const a =
-        (hslColorCopy.s * Math.min(hslColorCopy.l, 1 - hslColorCopy.l)) / 100;
+    const a = (hslColorCopy.s * Math.min(hslColorCopy.l, 1 - hslColorCopy.l)) / 100;
     const f = (n) => {
         const k = (n + hslColorCopy.h / 30) % 12;
         const color = hslColorCopy.l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
@@ -76,24 +40,21 @@ const hslToHex = (hslColor) => {
 };
 
 /**
- * Convert RGB values to HSL
- * This formula can be
- * found here https://www.niwa.nu/2013/05/math-behind-colorspace-conversions-rgb-hsl/
+ * Convert RGB values to HSL (Hue, Saturation, Luminance).
+ *
+ * @param {object[]} rgbValues - Array of objects containing RGB values for pixels.
+ * @returns {object[]} Array of objects containing HSL values for pixels.
  */
 const convertRGBtoHSL = (rgbValues) => {
     const returnValue = rgbValues.map((pixel) => {
-        let hue,
-            saturation,
-            luminance = 0;
+        let hue, saturation, luminance = 0;
 
-        // first change range from 0-255 to 0 - 1
         let redOpposite = pixel.r / 255;
         let greenOpposite = pixel.g / 255;
         let blueOpposite = pixel.b / 255;
 
         const Cmax = Math.max(redOpposite, greenOpposite, blueOpposite);
         const Cmin = Math.min(redOpposite, greenOpposite, blueOpposite);
-
         const difference = Cmax - Cmin;
 
         luminance = (Cmax + Cmin) / 2.0;
@@ -104,11 +65,6 @@ const convertRGBtoHSL = (rgbValues) => {
             saturation = difference / (2.0 - Cmax - Cmin);
         }
 
-        /**
-         * If Red is max, then Hue = (G-B)/(max-min)
-         * If Green is max, then Hue = 2.0 + (B-R)/(max-min)
-         * If Blue is max, then Hue = 4.0 + (R-G)/(max-min)
-         */
         const maxColorValue = Math.max(pixel.r, pixel.g, pixel.b);
 
         if (maxColorValue === pixel.r) {
@@ -119,33 +75,31 @@ const convertRGBtoHSL = (rgbValues) => {
             hue = 4.0 + (greenOpposite - blueOpposite) / difference;
         }
 
-        hue = hue * 60; // find the sector of 60 degrees to which the color belongs
+        hue = hue * 60;
 
-        // it should be always a positive angle
         if (hue < 0) {
             hue = hue + 360;
         }
 
-        // When all three of R, G and B are equal, we get a neutral color: white, grey or black.
         if (difference === 0) {
             return false;
         }
 
         return {
-            h: Math.round(hue) + 180, // plus 180 degrees because that is the complementary color
+            h: Math.round(hue) + 180,
             s: parseFloat(saturation * 100).toFixed(2),
             l: parseFloat(luminance * 100).toFixed(2),
         };
     });
 
     return returnValue;
-
 };
 
 /**
- * Using relative luminance we order the brightness of the colors
- * the fixed values and further explanation about this topic
- * can be found here -> https://en.wikipedia.org/wiki/Luma_(video)
+ * Order RGB values by luminance (brightness).
+ *
+ * @param {object[]} rgbValues - Array of objects containing RGB values for pixels.
+ * @returns {object[]} Array of RGB values ordered by luminance.
  */
 const orderByLuminance = (rgbValues) => {
     const calculateLuminance = (p) => {
@@ -157,6 +111,12 @@ const orderByLuminance = (rgbValues) => {
     });
 };
 
+/**
+ * Build an array of RGB values from image data.
+ *
+ * @param {Uint8ClampedArray} imageData - Image data.
+ * @returns {object[]} Array of objects containing RGB values for pixels.
+ */
 const buildRgb = (imageData) => {
     const rgbValues = [];
     for (let i = 0; i < imageData.length; i += 32) {
@@ -171,12 +131,13 @@ const buildRgb = (imageData) => {
     return rgbValues;
 };
 
+
 /**
- * Calculate the color distance or difference between 2 colors
+ * Calculate the color difference between two colors using Euclidean distance.
  *
- * further explanation of this topic
- * can be found here -> https://en.wikipedia.org/wiki/Euclidean_distance
- * note: this method is not accuarate for better results use Delta-E distance metric.
+ * @param {object} color1 - The first color { r: <red>, g: <green>, b: <blue> }.
+ * @param {object} color2 - The second color { r: <red>, g: <green>, b: <blue> }.
+ * @returns {number} The color difference.
  */
 const calculateColorDifference = (color1, color2) => {
     const rDifference = Math.pow(color2.r - color1.r, 2);
@@ -186,19 +147,16 @@ const calculateColorDifference = (color1, color2) => {
     return rDifference + gDifference + bDifference;
 };
 
-// returns what color channel has the biggest difference
+/**
+ * Find the color channel (r, g, or b) with the biggest difference in RGB values.
+ *
+ * @param {object[]} rgbValues - Array of objects containing RGB values for pixels.
+ * @returns {string} The color channel with the biggest difference (r, g, or b).
+ */
 const findBiggestColorRange = (rgbValues) => {
-    /**
-     * Min is initialized to the maximum value posible
-     * from there we procced to find the minimum value for that color channel
-     *
-     * Max is initialized to the minimum value posible
-     * from there we procced to fin the maximum value for that color channel
-     */
     let rMin = Number.MAX_VALUE;
     let gMin = Number.MAX_VALUE;
     let bMin = Number.MAX_VALUE;
-
     let rMax = Number.MIN_VALUE;
     let gMax = Number.MIN_VALUE;
     let bMax = Number.MIN_VALUE;
@@ -207,7 +165,6 @@ const findBiggestColorRange = (rgbValues) => {
         rMin = Math.min(rMin, pixel.r);
         gMin = Math.min(gMin, pixel.g);
         bMin = Math.min(bMin, pixel.b);
-
         rMax = Math.max(rMax, pixel.r);
         gMax = Math.max(gMax, pixel.g);
         bMax = Math.max(bMax, pixel.b);
@@ -217,7 +174,6 @@ const findBiggestColorRange = (rgbValues) => {
     const gRange = gMax - gMin;
     const bRange = bMax - bMin;
 
-    // determine which color has the biggest difference
     const biggestRange = Math.max(rRange, gRange, bRange);
     if (biggestRange === rRange) {
         return "r";
@@ -229,20 +185,21 @@ const findBiggestColorRange = (rgbValues) => {
 };
 
 /**
- * Median cut implementation
- * can be found here -> https://en.wikipedia.org/wiki/Median_cut
+ * Perform quantization of RGB values using Median Cut algorithm.
+ *
+ * @param {object[]} rgbValues - Array of objects containing RGB values for pixels.
+ * @param {number} depth - Current depth of recursion in the quantization process.
+ * @returns {object[]} Quantized array of RGB values.
  */
 const quantization = (rgbValues, depth) => {
     const MAX_DEPTH = 4;
 
-    // Base case
     if (depth === MAX_DEPTH || rgbValues.length === 0) {
         const color = rgbValues.reduce(
             (prev, curr) => {
                 prev.r += curr.r;
                 prev.g += curr.g;
                 prev.b += curr.b;
-
                 return prev;
             },
             {
@@ -259,13 +216,6 @@ const quantization = (rgbValues, depth) => {
         return [color];
     }
 
-    /**
-     *  Recursively do the following:
-     *  1. Find the pixel channel (red,green or blue) with biggest difference/range
-     *  2. Order by this channel
-     *  3. Divide in half the rgb colors list
-     *  4. Repeat process again, until desired depth or base case
-     */
     const componentToSortBy = findBiggestColorRange(rgbValues);
     rgbValues.sort((p1, p2) => {
         return p1[componentToSortBy] - p2[componentToSortBy];
@@ -278,7 +228,54 @@ const quantization = (rgbValues, depth) => {
     ];
 };
 
-export const main = async (imgSrcBase64) => {
+/**
+ * Build a color palette and complementary colors based on quantized RGB values.
+ *
+ * @param {object[]} colorsList - Array of quantized RGB values.
+ * @returns {Promise<object>} Promise that resolves to an object containing the palette and complementary colors.
+ */
+const buildPalette = async (colorsList) => {
+    const startTime = performance.now();
+    const colours = {
+        palette: [],
+        complementary: [],
+    };
+
+    const orderedByColor = orderByLuminance(colorsList);
+    const hslColors = convertRGBtoHSL(orderedByColor);
+
+    for (let i = 0; i < orderedByColor.length; i++) {
+        const hexColor = rgbToHex(orderedByColor[i]);
+        const hexColorComplementary = hslToHex(hslColors[i]);
+
+        if (i > 0) {
+            const difference = calculateColorDifference(
+                orderedByColor[i],
+                orderedByColor[i - 1]
+            );
+
+            if (difference < 120) continue;
+            colours.palette.push(hexColor);
+        }
+
+        if (hslColors[i].h) {
+            colours.palette.push(hexColor);
+            colours.complementary.push(hexColorComplementary);
+        }
+    }
+
+    const endTime = performance.now();
+    console.log(`Execution time: ${endTime - startTime} ms`);
+    return colours;
+};
+
+/**
+ * Extract color palette and complementary colors from an image using quantization and conversion algorithms.
+ *
+ * @param {string} imgSrcBase64 - Base64-encoded image source.
+ * @returns {Promise<object>} Promise that resolves to an object containing the palette and complementary colors.
+ */
+export const extractPaletteFromImage = async (imgSrcBase64) => {
     const image = new Image();
     image.src = imgSrcBase64;
 
@@ -291,7 +288,6 @@ export const main = async (imgSrcBase64) => {
             ctx.drawImage(image, 0, 0);
 
             const startTime = performance.now();
-
             const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             const rgbArray = buildRgb(imageData.data);
             const quantColors = quantization(rgbArray, 0);
@@ -305,7 +301,3 @@ export const main = async (imgSrcBase64) => {
     });
 };
 
-
-
-
-export default main;

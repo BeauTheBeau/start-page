@@ -242,15 +242,9 @@ button:hover {
   align-items: center;
   gap: 1rem;
   margin-top: 2rem;
-  background-size: 400% 100%;
-  border: 2px solid rgba(var(--fg), 0.25);
+  border: 2px solid rgba(var(--fg), 1);
   border-radius: 0.5rem;
-}
-.media__player.playing {
-  background: linear-gradient(270deg, rgba(0, 0, 0, 0) 0%, rgba(var(--fg), 0.1) 50%, rgba(0, 0, 0, 0) 100%);
-  background-size: cover;
-  background-position: center;
-  animation: epic-gradient 1s ease infinite;
+  background: unset;
 }
 .media__player .media__player__art {
   height: 3rem;
@@ -292,18 +286,6 @@ button:hover {
 .media__player .media__player__controls :not(:first-child):not(:last-child):hover {
   border-left: 2px solid rgba(var(--fg), 1);
   border-right: 2px solid rgba(var(--fg), 1);
-}
-
-@keyframes epic-gradient {
-  0% {
-    background-position: 0 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0 50%;
-  }
 }
 
 /*# sourceMappingURL=main.css.map */
